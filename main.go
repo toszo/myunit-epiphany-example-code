@@ -4,6 +4,7 @@ import (
     "fmt"
     "log"
     "net/http"
+    "os"
     "strconv"
 )
 
@@ -12,7 +13,12 @@ func handlerCheck(w http.ResponseWriter, r *http.Request) {
 }
 
 func handlerHost(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "Ok")
+    hostname, err := os.Hostname()
+    if err == nil {
+        fmt.Fprintf(w, hostname)
+    } else {
+        fmt.Println(err)
+    }
 }
 
 func handlerLastValue(w http.ResponseWriter, r *http.Request) {
