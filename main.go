@@ -37,13 +37,18 @@ func handlerEnv(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintf(w, os.Getenv("go_var"))
 }
 
+func handlerVersion(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintf(w, "REPLACE_THIS_BY_VERSION_NUMBER")
+}
+
 func main() {
     http.HandleFunc("/check", handlerCheck)
-    http.HandleFunc("/v1/check", handlerCheck)
     http.HandleFunc("/status", handlerCheck)
+    http.HandleFunc("/v1/check", handlerCheck)
     http.HandleFunc("/v1/status", handlerCheck)
     http.HandleFunc("/v1/host", handlerHost)
     http.HandleFunc("/v1/number", handlerNumber)
     http.HandleFunc("/v1/env", handlerEnv)
+    http.HandleFunc("/v1/version", handlerVersion)
     log.Fatal(http.ListenAndServe(":8080", nil))
 }
