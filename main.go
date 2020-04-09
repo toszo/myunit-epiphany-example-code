@@ -26,16 +26,21 @@ func handlerCheck(w http.ResponseWriter, r *http.Request) {
 }
 
 func handlerHost(w http.ResponseWriter, r *http.Request) {
+    hostname, err := os.Hostname()
+    if err != nil {
+        panic(err)
+    }
     w.Header().Set("access-control-allow-origin", "*")
     w.Header().Set("access-control-allow-methods", "GET, PUT, DELETE, POST, OPTIONS")
     w.Header().Set("access-control-allow-headers", "x-algolia-application-id, connection, origin, x-algolia-api-key, content-type, content-length, x-algolia-signature, x-algolia-usertoken, x-algolia-tagfilters, DNT, X-Mx-ReqToken, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Authorization, Accept")
     w.Header().Set("access-control-allow-credentials", "false")
-    hostname, err := os.Hostname()
-    if err == nil {
-        fmt.Fprintf(w, hostname)
-    } else {
-        fmt.Println(err)
+
+    resJson := ResponseJson{hostname}
+    newsJson, err := json.Marshal(resJson)
+    if err != nil {
+        panic(err)
     }
+    w.Write(newsJson)
 }
 
 func handlerNumber(w http.ResponseWriter, r *http.Request) {
@@ -66,7 +71,12 @@ func handlerEnv(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("access-control-allow-methods", "GET, PUT, DELETE, POST, OPTIONS")
     w.Header().Set("access-control-allow-headers", "x-algolia-application-id, connection, origin, x-algolia-api-key, content-type, content-length, x-algolia-signature, x-algolia-usertoken, x-algolia-tagfilters, DNT, X-Mx-ReqToken, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Authorization, Accept")
     w.Header().Set("access-control-allow-credentials", "false")
-    fmt.Fprintf(w, os.Getenv("go_var"))
+    resJson := ResponseJson{os.Getenv("go_var")}
+    newsJson, err := json.Marshal(resJson)
+    if err != nil {
+        panic(err)
+    }
+    w.Write(newsJson)
 }
 
 func handlerJSON(w http.ResponseWriter, r *http.Request) {
