@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: pprach/test
+  repository: 540350320930.dkr.ecr.eu-north-1.amazonaws.com/pprach/gotest
   version: go-0.0.1
   pullPolicy: Always
 
