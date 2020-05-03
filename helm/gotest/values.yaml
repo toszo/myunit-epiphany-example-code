@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: pprach/test
-  version: go-0.0.1
+  version: "566b6d3"
   pullPolicy: Always
 
 imagePullSecrets: []
@@ -69,4 +69,4 @@ tolerations: []
 affinity: {}
 
 antiAffinity:
-  enabled: true
+  enabled: false
